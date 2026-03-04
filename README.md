@@ -8,7 +8,7 @@ A full-stack SaaS kanban board with AI task generation, built with Next.js 15, S
 ## Product Summary
 
 FlowBoard-AI
- lets you create projects, organize work on a drag-and-drop kanban board, and generate entire task lists from a plain-English prompt using GPT-4o-mini. Every action is scoped to the authenticated user via Supabase Row Level Security.
+ lets you create projects, organize work on a drag-and-drop kanban board, and generate entire task lists from a plain-English prompt using GROQ. Every action is scoped to the authenticated user via Supabase Row Level Security.
 
 ---
 
@@ -20,7 +20,7 @@ FlowBoard-AI
 | Language | TypeScript 5 |
 | Database | Supabase (PostgreSQL + Auth) |
 | Styling | Tailwind CSS v4 + shadcn/ui |
-| AI | Vercel AI SDK + OpenAI GPT-4o-mini |
+| AI | Vercel AI SDK + GROQ |
 | Drag & Drop | @hello-pangea/dnd |
 | Notifications | Sonner (toasts) |
 | Theme | next-themes (dark / light / system) |
