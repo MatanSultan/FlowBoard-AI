@@ -128,9 +128,6 @@ Open [http://localhost:3000](http://localhost:3000).
 
 ---
 
-## Screenshots
-
-_Add screenshots here after deployment._
 
 ---
 
