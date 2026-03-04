@@ -1,14 +1,31 @@
-# FlowBoard-AI
-FlowBoard AI-powered Project Management
+# FlowBoard AI
 
-A full-stack SaaS kanban board with AI task generation, built with Next.js 15, Supabase, and the Vercel AI SDK.
+AI-powered project planning on a clean Kanban board.
+
+FlowBoard AI is a full-stack SaaS Kanban app that lets you create projects, manage tasks with drag-and-drop, and generate (or improve) tasks using AI. All data is protected with Supabase Auth + Row Level Security (RLS), scoped per user.
+
+**Live Demo:** https://flow-board-ai.vercel.app
 
 ---
 
-## Product Summary
+## Why this project stands out
 
-FlowBoard-AI
- lets you create projects, organize work on a drag-and-drop kanban board, and generate entire task lists from a plain-English prompt using GROQ. Every action is scoped to the authenticated user via Supabase Row Level Security.
+- **Production-style security:** Supabase **RLS** enforces per-user data isolation at the database layer.
+- **Modern Next.js architecture:** Next.js 15 App Router + Server Actions for clean, scalable patterns.
+- **AI done responsibly:** AI endpoints return **strict JSON** validated with **Zod** (robust parsing + error handling).
+- **Great UX:** Drag-and-drop Kanban with optimistic updates and a polished shadcn/ui interface.
+
+---
+
+## Features
+
+- **Auth** (Supabase): Email/password + session handling + protected routes
+- **Projects:** Create & delete projects (scoped by RLS)
+- **Kanban board:** 3 columns (To Do / In Progress / Done) with drag-and-drop
+- **Tasks:** Create / edit / delete tasks, set priority, tags, and details
+- **AI task generation:** Turn a plain-English goal into 3–6 actionable tasks
+- **AI task improvement:** Rewrite a task into a clearer, more actionable version
+- **Dark mode:** System-aware theme toggle
 
 ---
 
@@ -17,17 +34,15 @@ FlowBoard-AI
 | Layer | Technology |
 |---|---|
 | Framework | Next.js 15 (App Router, Server Actions) |
-| Language | TypeScript 5 |
-| Database | Supabase (PostgreSQL + Auth) |
-| Styling | Tailwind CSS v4 + shadcn/ui |
-| AI | Vercel AI SDK + GROQ |
+| Language | TypeScript |
+| Database/Auth | Supabase (PostgreSQL + Auth + RLS) |
+| UI | Tailwind CSS + shadcn/ui |
+| AI | Vercel AI SDK + Groq |
 | Drag & Drop | @hello-pangea/dnd |
-| Notifications | Sonner (toasts) |
-| Theme | next-themes (dark / light / system) |
+| Notifications | Sonner |
 | Deployment | Vercel |
 
 ---
-
 ## Architecture Overview
 
 ```
@@ -131,6 +146,22 @@ Open [http://localhost:3000](http://localhost:3000).
 
 <img width="2554" height="1301" alt="image" src="https://github.com/user-attachments/assets/f76c4241-06ed-4852-928a-ba400d6eebd0" />
 
+
+
+Notes on AI implementation
+
+Groq models may not support json_schema structured outputs.
+To keep the app reliable, the AI endpoints use:
+
+generateText(...)
+
+strict JSON extraction
+
+Zod validation
+
+clear error messages + safe fallbacks
+
+This makes AI features stable in production.
 ---
 
 ## License
