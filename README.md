@@ -1,4 +1,5 @@
-# Taskr — AI-powered Project Management
+# FlowBoard-AI
+ — AI-powered Project Management
 
 A full-stack SaaS kanban board with AI task generation, built with Next.js 15, Supabase, and the Vercel AI SDK.
 
