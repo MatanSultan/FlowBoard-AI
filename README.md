@@ -129,6 +129,7 @@ Open [http://localhost:3000](http://localhost:3000).
 
 ---
 
+<img width="2554" height="1301" alt="image" src="https://github.com/user-attachments/assets/f76c4241-06ed-4852-928a-ba400d6eebd0" />
 
 ---
 
