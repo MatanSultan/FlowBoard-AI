@@ -31,7 +31,7 @@ export async function AppNavbar() {
       <div className="max-w-6xl mx-auto px-4 h-full flex items-center justify-between">
         <Link href="/dashboard" className="flex items-center gap-2 font-bold text-foreground">
           <LayoutGrid className="w-5 h-5 text-primary" />
-          <span>Taskr</span>
+          <span>FlowBoard-AI</span>
         </Link>
 
         <nav className="flex items-center gap-1">

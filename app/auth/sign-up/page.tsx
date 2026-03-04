@@ -52,7 +52,8 @@ export default function SignUpPage() {
         <div className="flex flex-col items-center gap-2 text-center">
           <Link href="/" className="flex items-center gap-2 text-primary font-bold text-xl">
             <LayoutGrid className="w-6 h-6" />
-            Taskr
+            FlowBoard-AI
+
           </Link>
           <p className="text-muted-foreground text-sm">Create your free workspace</p>
         </div>

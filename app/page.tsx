@@ -87,7 +87,7 @@ export default async function LandingPage() {
       name: 'Aiko Tanaka',
       role: 'Indie Developer',
       quote:
-        'I use Taskr for all my side projects. Being able to spin up a board with AI-generated tasks is a game changer.',
+        'I use FlowBoard-AI for all my side projects. Being able to spin up a board with AI-generated tasks is a game changer.',
     },
   ]
 
@@ -105,7 +105,8 @@ export default async function LandingPage() {
         <div className="max-w-5xl mx-auto px-6 h-14 flex items-center justify-between">
           <Link href="/" className="flex items-center gap-2 font-bold text-foreground">
             <LayoutGrid className="w-5 h-5 text-primary" />
-            <span>Taskr</span>
+            <span>FlowBoard-AI
+</span>
           </Link>
           <nav className="flex items-center gap-2">
             <ThemeToggle />
@@ -133,7 +134,8 @@ export default async function LandingPage() {
           <span className="text-primary">powered by AI</span>
         </h1>
         <p className="text-lg text-muted-foreground text-pretty max-w-2xl mx-auto mb-10 leading-relaxed">
-          Taskr combines a clean kanban board with AI-powered task generation so you spend
+          FlowBoard-AI
+ combines a clean kanban board with AI-powered task generation so you spend
           less time planning and more time building.
         </p>
         <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
@@ -223,7 +225,8 @@ export default async function LandingPage() {
               Loved by builders
             </h2>
             <p className="text-muted-foreground">
-              Join developers and PMs who use Taskr to ship faster.
+              Join developers and PMs who use FlowBoard-AI
+ to ship faster.
             </p>
           </div>
           <div className="grid sm:grid-cols-3 gap-6">
@@ -272,7 +275,8 @@ export default async function LandingPage() {
         <div className="max-w-5xl mx-auto px-6 flex flex-col sm:flex-row items-center justify-between gap-4">
           <span className="flex items-center gap-2 text-sm font-medium text-foreground">
             <LayoutGrid className="w-4 h-4 text-primary" />
-            Taskr
+            FlowBoard-AI
+
           </span>
           <div className="flex items-center gap-6 text-xs text-muted-foreground">
             <Link href="/auth/sign-up" className="hover:text-foreground transition-colors">

@@ -9,10 +9,9 @@ const _geist = Geist({ subsets: ['latin'] })
 const _geistMono = Geist_Mono({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
-  title: 'Taskr — AI-powered Project Management',
+  title: 'FlowBoard-AI-powered Project Management',
   description:
     'Organize your projects with a beautiful kanban board and AI-generated tasks.',
-  generator: 'v0.dev',
 }
 
 export default function RootLayout({

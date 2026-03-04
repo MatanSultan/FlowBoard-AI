@@ -1,4 +1,5 @@
-# Taskr — AI-powered Project Management
+# FlowBoard-AI
+FlowBoard AI-powered Project Management
 
 A full-stack SaaS kanban board with AI task generation, built with Next.js 15, Supabase, and the Vercel AI SDK.
 
@@ -6,7 +7,8 @@ A full-stack SaaS kanban board with AI task generation, built with Next.js 15, S
 
 ## Product Summary
 
-Taskr lets you create projects, organize work on a drag-and-drop kanban board, and generate entire task lists from a plain-English prompt using GPT-4o-mini. Every action is scoped to the authenticated user via Supabase Row Level Security.
+FlowBoard-AI
+ lets you create projects, organize work on a drag-and-drop kanban board, and generate entire task lists from a plain-English prompt using GPT-4o-mini. Every action is scoped to the authenticated user via Supabase Row Level Security.
 
 ---
 
@@ -40,8 +42,8 @@ app/
   board/[id]/           # Protected: kanban board for a project
   settings/             # Protected: user profile
   api/
-    generate-tasks/     # POST: AI task generation (OpenAI)
-    improve-task/       # POST: AI task improvement (OpenAI)
+    generate-tasks/     # POST: AI task generation (Groq)
+    improve-task/       # POST: AI task improvement (Groq)
 
 components/
   app-navbar.tsx        # Server component: user avatar, nav, sign-out
