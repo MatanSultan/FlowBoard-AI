@@ -19,32 +19,34 @@ export default async function BoardPage({ params }: BoardPageProps) {
   if (!project) notFound()
 
   return (
-    <div className="min-h-screen bg-background flex flex-col">
+    <div className="flex min-h-screen flex-col bg-background">
       <AppNavbar />
-      <main className="flex-1 flex flex-col px-4 py-6 max-w-full">
-        {/* Board header */}
-        <div className="max-w-6xl mx-auto w-full mb-6">
-          <div className="flex items-start justify-between gap-4 flex-wrap">
-            <div className="flex items-center gap-3">
-              <Link href="/dashboard">
-                <Button variant="ghost" size="icon" className="h-8 w-8">
-                  <ChevronLeft className="w-4 h-4" />
+      <main className="flex flex-1 flex-col px-3 py-5 sm:px-4 sm:py-6">
+        <div className="mx-auto mb-5 w-full max-w-6xl sm:mb-6">
+          <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
+            <div className="flex items-start gap-3">
+              <Link href="/dashboard" className="shrink-0">
+                <Button variant="ghost" size="icon" className="h-9 w-9 rounded-full">
+                  <ChevronLeft className="h-4 w-4" />
                   <span className="sr-only">Back to dashboard</span>
                 </Button>
               </Link>
-              <div>
-                <h1 className="text-xl font-bold text-foreground">{project.name}</h1>
+              <div className="min-w-0">
+                <h1 className="text-xl font-bold text-foreground sm:text-2xl">{project.name}</h1>
                 {project.description && (
-                  <p className="text-sm text-muted-foreground mt-0.5">{project.description}</p>
+                  <p className="mt-1 text-sm leading-relaxed text-muted-foreground sm:max-w-2xl">
+                    {project.description}
+                  </p>
                 )}
               </div>
             </div>
-            <AiGenerateDialog projectId={project.id} projectName={project.name} />
+            <div className="w-full sm:w-auto">
+              <AiGenerateDialog projectId={project.id} projectName={project.name} />
+            </div>
           </div>
         </div>
 
-        {/* Kanban columns */}
-        <div className="max-w-6xl mx-auto w-full flex-1 flex flex-col">
+        <div className="mx-auto flex w-full max-w-6xl flex-1 flex-col">
           <KanbanBoard projectId={project.id} initialTasks={tasks} />
         </div>
       </main>

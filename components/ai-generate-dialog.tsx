@@ -118,15 +118,15 @@ export function AiGenerateDialog({ projectId, projectName }: AiGenerateDialogPro
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button variant="outline" className="gap-2">
-          <Sparkles className="w-4 h-4 text-primary" />
+        <Button variant="outline" className="w-full gap-2 sm:w-auto">
+          <Sparkles className="h-4 w-4 text-primary" />
           Generate with AI
         </Button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-lg">
+      <DialogContent className="max-h-[90vh] w-[calc(100vw-1.5rem)] max-w-lg overflow-y-auto p-4 sm:p-6">
         <DialogHeader>
           <DialogTitle className="flex items-center gap-2">
-            <Sparkles className="w-4 h-4 text-primary" />
+            <Sparkles className="h-4 w-4 text-primary" />
             AI Task Generator
           </DialogTitle>
           <DialogDescription>
@@ -158,12 +158,12 @@ export function AiGenerateDialog({ projectId, projectName }: AiGenerateDialogPro
           >
             {loading ? (
               <>
-                <Loader2 className="w-4 h-4 animate-spin" />
+                <Loader2 className="h-4 w-4 animate-spin" />
                 Generating tasks...
               </>
             ) : (
               <>
-                <Sparkles className="w-4 h-4" />
+                <Sparkles className="h-4 w-4" />
                 Generate tasks
               </>
             )}
@@ -171,7 +171,7 @@ export function AiGenerateDialog({ projectId, projectName }: AiGenerateDialogPro
 
           {tasks.length > 0 && (
             <div className="space-y-3">
-              <div className="flex items-center justify-between">
+              <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
                 <p className="text-sm font-medium text-foreground">
                   Select tasks to add ({selected.size}/{tasks.length})
                 </p>
@@ -183,18 +183,18 @@ export function AiGenerateDialog({ projectId, projectName }: AiGenerateDialogPro
                         : new Set(tasks.map((_, i) => i)),
                     )
                   }
-                  className="text-xs text-primary hover:underline"
+                  className="self-start text-xs text-primary hover:underline"
                 >
                   {selected.size === tasks.length ? 'Deselect all' : 'Select all'}
                 </button>
               </div>
 
-              <div className="space-y-2 max-h-64 overflow-y-auto pr-1">
+              <div className="max-h-64 space-y-2 overflow-y-auto pr-1">
                 {tasks.map((task, i) => (
                   <div
                     key={i}
                     onClick={() => toggleTask(i)}
-                    className={`p-3 rounded-lg border cursor-pointer transition-all ${
+                    className={`cursor-pointer rounded-lg border p-3 transition-all ${
                       selected.has(i)
                         ? 'border-primary/40 bg-primary/5'
                         : 'border-border bg-card opacity-60'
@@ -202,29 +202,29 @@ export function AiGenerateDialog({ projectId, projectName }: AiGenerateDialogPro
                   >
                     <div className="flex items-start gap-2">
                       <div
-                        className={`mt-0.5 w-4 h-4 rounded border shrink-0 flex items-center justify-center transition-colors ${
+                        className={`mt-0.5 flex h-4 w-4 shrink-0 items-center justify-center rounded border transition-colors ${
                           selected.has(i)
-                            ? 'bg-primary border-primary'
+                            ? 'border-primary bg-primary'
                             : 'border-border'
                         }`}
                       >
                         {selected.has(i) && (
-                          <svg className="w-2.5 h-2.5 text-primary-foreground" fill="currentColor" viewBox="0 0 12 12">
+                          <svg className="h-2.5 w-2.5 text-primary-foreground" fill="currentColor" viewBox="0 0 12 12">
                             <path d="M10 3L5 8.5 2 5.5" stroke="currentColor" strokeWidth="1.5" fill="none" strokeLinecap="round" strokeLinejoin="round"/>
                           </svg>
                         )}
                       </div>
-                      <div className="flex-1 space-y-1">
+                      <div className="min-w-0 flex-1 space-y-1">
                         <p className="text-sm font-medium text-foreground">{task.title}</p>
                         {task.description && (
                           <p className="text-xs text-muted-foreground">{task.description}</p>
                         )}
-                        <div className="flex items-center gap-1.5 flex-wrap">
-                          <Badge className={`text-xs px-1.5 py-0 h-4 border-0 ${PRIORITY_CONFIG[task.priority]}`}>
+                        <div className="flex flex-wrap items-center gap-1.5">
+                          <Badge className={`h-5 border-0 px-1.5 py-0 text-xs ${PRIORITY_CONFIG[task.priority]}`}>
                             {task.priority}
                           </Badge>
                           {task.tags.map((tag) => (
-                            <Badge key={tag} variant="secondary" className="text-xs px-1.5 py-0 h-4 font-normal">
+                            <Badge key={tag} variant="secondary" className="h-5 px-1.5 py-0 text-xs font-normal">
                               {tag}
                             </Badge>
                           ))}
@@ -242,17 +242,17 @@ export function AiGenerateDialog({ projectId, projectName }: AiGenerateDialogPro
               >
                 {done ? (
                   <>
-                    <CheckCircle className="w-4 h-4" />
+                    <CheckCircle className="h-4 w-4" />
                     Added!
                   </>
                 ) : adding ? (
                   <>
-                    <Loader2 className="w-4 h-4 animate-spin" />
+                    <Loader2 className="h-4 w-4 animate-spin" />
                     Adding tasks...
                   </>
                 ) : (
                   <>
-                    <Plus className="w-4 h-4" />
+                    <Plus className="h-4 w-4" />
                     Add {selected.size} task{selected.size !== 1 ? 's' : ''} to board
                   </>
                 )}

@@ -13,16 +13,17 @@ import { toast } from 'sonner'
 const COLUMNS: Status[] = ['todo', 'in_progress', 'done']
 
 const COLUMN_STYLES: Record<Status, string> = {
-  todo: 'bg-muted/30',
-  in_progress: 'bg-blue-50/50 dark:bg-blue-950/20',
-  done: 'bg-green-50/50 dark:bg-green-950/20',
+  todo: 'border-slate-200/80 bg-gradient-to-b from-slate-50 via-background to-background dark:border-slate-800/80 dark:from-slate-950/40 dark:via-background dark:to-background',
+  in_progress:
+    'border-sky-200/80 bg-gradient-to-b from-sky-50 via-background to-background dark:border-sky-900/70 dark:from-sky-950/35 dark:via-background dark:to-background',
+  done: 'border-emerald-200/80 bg-gradient-to-b from-emerald-50 via-background to-background dark:border-emerald-900/70 dark:from-emerald-950/35 dark:via-background dark:to-background',
 }
 
 const BADGE_STYLES: Record<Status, string> = {
-  todo: 'bg-muted text-muted-foreground border-0',
+  todo: 'border-0 bg-muted text-muted-foreground',
   in_progress:
-    'bg-blue-100 text-blue-700 dark:bg-blue-900/40 dark:text-blue-300 border-0',
-  done: 'bg-green-100 text-green-700 dark:bg-green-900/40 dark:text-green-300 border-0',
+    'border-0 bg-blue-100 text-blue-700 dark:bg-blue-900/40 dark:text-blue-300',
+  done: 'border-0 bg-green-100 text-green-700 dark:bg-green-900/40 dark:text-green-300',
 }
 
 const COLUMN_INDICATOR: Record<Status, string> = {
@@ -65,14 +66,12 @@ export function KanbanBoard({ projectId, initialTasks }: KanbanBoardProps) {
       const srcStatus = source.droppableId as Status
       const dstStatus = destination.droppableId as Status
 
-      // Snapshot for rollback
       const snapshot = {
         todo: [...columns.todo],
         in_progress: [...columns.in_progress],
         done: [...columns.done],
       }
 
-      // Optimistic update
       setColumns((prev) => {
         const next: Columns = {
           todo: [...prev.todo],
@@ -84,7 +83,6 @@ export function KanbanBoard({ projectId, initialTasks }: KanbanBoardProps) {
         return next
       })
 
-      // Persist, roll back on failure
       startTransition(async () => {
         try {
           await updateTaskStatus(draggableId, projectId, dstStatus, destination.index)
@@ -99,41 +97,49 @@ export function KanbanBoard({ projectId, initialTasks }: KanbanBoardProps) {
 
   return (
     <DragDropContext onDragEnd={onDragEnd}>
-      <div className="flex gap-4 overflow-x-auto pb-6 min-h-0 items-start">
+      <div className="flex min-h-0 flex-col items-stretch gap-4 pb-6 lg:flex-row lg:items-start lg:gap-5 lg:overflow-x-auto">
         {COLUMNS.map((status) => {
           const tasks = columns[status]
           return (
             <div
               key={status}
-              className={`flex flex-col rounded-xl border border-border/60 min-w-[280px] w-[280px] shrink-0 ${COLUMN_STYLES[status]}`}
+              className={`flex w-full min-w-0 flex-col rounded-[28px] border shadow-[0_18px_45px_-32px_rgba(15,23,42,0.45)] lg:w-[300px] lg:min-w-[300px] lg:shrink-0 ${COLUMN_STYLES[status]}`}
             >
-              {/* Column header */}
-              <div className="flex items-center justify-between px-3 py-3 border-b border-border/60">
-                <div className="flex items-center gap-2">
+              <div className="flex items-center justify-between gap-3 border-b border-border/60 px-4 py-4">
+                <div className="flex min-w-0 items-center gap-2.5">
                   <span
-                    className={`w-2 h-2 rounded-full shrink-0 ${COLUMN_INDICATOR[status]}`}
+                    className={`h-2.5 w-2.5 shrink-0 rounded-full shadow-sm ${COLUMN_INDICATOR[status]}`}
                   />
-                  <span className="text-sm font-semibold text-foreground">
-                    {STATUS_LABELS[status]}
-                  </span>
-                  <Badge className={`text-xs px-1.5 py-0 h-5 font-medium ${BADGE_STYLES[status]}`}>
-                    {tasks.length}
-                  </Badge>
+                  <div className="min-w-0">
+                    <span className="block truncate text-sm font-semibold text-foreground">
+                      {STATUS_LABELS[status]}
+                    </span>
+                    <span className="block text-[11px] uppercase tracking-[0.18em] text-muted-foreground/80">
+                      {status.replace('_', ' ')}
+                    </span>
+                  </div>
                 </div>
+                <Badge
+                  className={`h-6 shrink-0 rounded-full px-2.5 text-xs font-semibold shadow-sm ${BADGE_STYLES[status]}`}
+                >
+                  {tasks.length} items
+                </Badge>
               </div>
 
-              {/* Droppable area */}
               <Droppable droppableId={status}>
                 {(provided, snapshot) => (
                   <div
                     ref={provided.innerRef}
                     {...provided.droppableProps}
-                    className={`flex-1 flex flex-col gap-2 p-2 min-h-[80px] transition-colors rounded-b-xl ${
+                    className={`flex min-h-[160px] flex-1 flex-col gap-3 rounded-b-[28px] p-3 transition-all sm:min-h-[220px] ${
                       snapshot.isDraggingOver
-                        ? 'bg-primary/5 ring-1 ring-inset ring-primary/20'
+                        ? 'bg-primary/[0.045] ring-1 ring-inset ring-primary/25'
                         : ''
                     }`}
                   >
+                    <div className="pointer-events-none rounded-2xl border border-dashed border-border/60 bg-background/60 px-3 py-2 text-[11px] font-medium uppercase tracking-[0.18em] text-muted-foreground/75">
+                      Drag tasks here
+                    </div>
                     {tasks.map((task, index) => (
                       <TaskCard
                         key={task.id}
@@ -160,18 +166,19 @@ export function KanbanBoard({ projectId, initialTasks }: KanbanBoardProps) {
                 )}
               </Droppable>
 
-              {/* Add task */}
-              <div className="px-2 pb-2">
-                <AddTaskDialog
-                  projectId={projectId}
-                  defaultStatus={status}
-                  onCreated={(task) =>
-                    setColumns((prev) => ({
-                      ...prev,
-                      [status]: [...prev[status], task],
-                    }))
-                  }
-                />
+              <div className="px-3 pb-3">
+                <div className="rounded-2xl border border-border/60 bg-background/80 p-1.5 shadow-sm">
+                  <AddTaskDialog
+                    projectId={projectId}
+                    defaultStatus={status}
+                    onCreated={(task) =>
+                      setColumns((prev) => ({
+                        ...prev,
+                        [status]: [...prev[status], task],
+                      }))
+                    }
+                  />
+                </div>
               </div>
             </div>
           )

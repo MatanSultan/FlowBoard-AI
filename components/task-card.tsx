@@ -55,16 +55,16 @@ import { toast } from 'sonner'
 const PRIORITY_CONFIG = {
   low: {
     label: 'Low',
-    class: 'bg-muted text-muted-foreground border-0',
+    class: 'border-0 bg-muted text-muted-foreground',
   },
   medium: {
     label: 'Medium',
     class:
-      'bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-400 border-0',
+      'border-0 bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-400',
   },
   high: {
     label: 'High',
-    class: 'bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-400 border-0',
+    class: 'border-0 bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-400',
   },
 }
 
@@ -172,23 +172,31 @@ export function TaskCard({ task, index, onDeleted, onUpdated }: TaskCardProps) {
             ref={provided.innerRef}
             {...provided.draggableProps}
             {...provided.dragHandleProps}
-            className={`group bg-card border rounded-lg p-3 space-y-2 cursor-grab active:cursor-grabbing transition-all select-none ${
+            className={`group cursor-grab select-none space-y-3 rounded-[22px] border bg-gradient-to-br from-card via-card to-background p-3.5 shadow-[0_14px_32px_-26px_rgba(15,23,42,0.45)] transition-all active:cursor-grabbing ${
               snapshot.isDragging
-                ? 'shadow-xl rotate-1 border-primary/40 ring-1 ring-primary/20'
-                : 'border-border hover:border-border/80 hover:shadow-sm'
+                ? 'rotate-1 border-primary/40 shadow-xl ring-1 ring-primary/20'
+                : 'border-border/70 hover:-translate-y-0.5 hover:border-border hover:shadow-[0_20px_44px_-30px_rgba(15,23,42,0.5)]'
             }`}
             onClick={() => setSheetOpen(true)}
           >
             <div className="flex items-start justify-between gap-2">
-              <p className="text-sm font-medium text-foreground leading-snug flex-1 line-clamp-2">
-                {task.title}
-              </p>
+              <div className="flex-1 space-y-2">
+                <div className="flex items-center gap-2">
+                  <span className="h-2 w-2 rounded-full bg-primary/70 shadow-sm" />
+                  <span className="text-[11px] font-semibold uppercase tracking-[0.18em] text-muted-foreground/80">
+                    Task card
+                  </span>
+                </div>
+                <p className="line-clamp-2 text-sm font-semibold leading-snug text-foreground">
+                  {task.title}
+                </p>
+              </div>
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
                   <Button
                     variant="ghost"
                     size="icon"
-                    className="h-6 w-6 shrink-0 opacity-0 group-hover:opacity-100 transition-opacity"
+                    className="h-7 w-7 shrink-0 rounded-full opacity-0 transition-opacity group-hover:opacity-100"
                     onClick={(e) => e.stopPropagation()}
                     aria-label="Task options"
                   >
@@ -220,20 +228,20 @@ export function TaskCard({ task, index, onDeleted, onUpdated }: TaskCardProps) {
             </div>
 
             {task.description && (
-              <p className="text-xs text-muted-foreground line-clamp-2 leading-relaxed">
+              <p className="line-clamp-2 text-xs leading-relaxed text-muted-foreground">
                 {task.description}
               </p>
             )}
 
             <div className="flex items-center flex-wrap gap-1.5">
-              <Badge className={`text-xs px-1.5 py-0 h-5 font-medium ${priority.class}`}>
+              <Badge className={`h-6 rounded-full px-2 py-0 text-xs font-medium ${priority.class}`}>
                 <Flag className="w-2.5 h-2.5 mr-1" />
                 {priority.label}
               </Badge>
               {task.due_date && (
                 <Badge
                   variant="outline"
-                  className="text-xs px-1.5 py-0 h-5 gap-1 font-normal"
+                  className="h-6 rounded-full border-border/70 bg-background/80 px-2 py-0 text-xs font-normal"
                 >
                   <Calendar className="w-2.5 h-2.5" />
                   {format(parseISO(task.due_date), 'MMM d')}
@@ -243,7 +251,7 @@ export function TaskCard({ task, index, onDeleted, onUpdated }: TaskCardProps) {
                 <Badge
                   key={tag}
                   variant="secondary"
-                  className="text-xs px-1.5 py-0 h-5 font-normal"
+                  className="h-6 rounded-full bg-secondary/80 px-2 py-0 text-xs font-normal"
                 >
                   {tag}
                 </Badge>
@@ -253,14 +261,13 @@ export function TaskCard({ task, index, onDeleted, onUpdated }: TaskCardProps) {
         )}
       </Draggable>
 
-      {/* Task Sheet */}
       <Sheet open={sheetOpen} onOpenChange={setSheetOpen}>
-        <SheetContent className="sm:max-w-md w-full overflow-y-auto">
+        <SheetContent className="w-full overflow-y-auto sm:max-w-md">
           <SheetHeader className="mb-4">
             <SheetTitle className="text-left">Task details</SheetTitle>
           </SheetHeader>
           <Tabs defaultValue="details">
-            <TabsList className="w-full mb-4">
+            <TabsList className="mb-4 w-full">
               <TabsTrigger value="details" className="flex-1">
                 Details
               </TabsTrigger>
@@ -269,7 +276,7 @@ export function TaskCard({ task, index, onDeleted, onUpdated }: TaskCardProps) {
               </TabsTrigger>
             </TabsList>
 
-            <TabsContent value="details" className="space-y-4 mt-0">
+            <TabsContent value="details" className="mt-0 space-y-4">
               <div className="space-y-2">
                 <Label htmlFor="sheet-title">Title</Label>
                 <Input
@@ -323,7 +330,7 @@ export function TaskCard({ task, index, onDeleted, onUpdated }: TaskCardProps) {
               <div className="space-y-2">
                 <Label htmlFor="sheet-tags">
                   Tags{' '}
-                  <span className="text-muted-foreground font-normal">
+                  <span className="font-normal text-muted-foreground">
                     (comma-separated)
                   </span>
                 </Label>
@@ -356,7 +363,7 @@ export function TaskCard({ task, index, onDeleted, onUpdated }: TaskCardProps) {
                 <Button
                   variant="outline"
                   size="sm"
-                  className="text-destructive hover:text-destructive gap-2"
+                  className="gap-2 text-destructive hover:text-destructive"
                   onClick={() => {
                     setSheetOpen(false)
                     setDeleteOpen(true)
@@ -391,7 +398,7 @@ export function TaskCard({ task, index, onDeleted, onUpdated }: TaskCardProps) {
             <TabsContent value="activity" className="mt-0">
               <div className="space-y-4">
                 <div className="flex items-start gap-3 text-sm">
-                  <Clock className="w-4 h-4 text-muted-foreground mt-0.5 shrink-0" />
+                  <Clock className="w-4 h-4 mt-0.5 shrink-0 text-muted-foreground" />
                   <div>
                     <p className="text-muted-foreground">Created</p>
                     <p className="font-medium text-foreground">
@@ -401,7 +408,7 @@ export function TaskCard({ task, index, onDeleted, onUpdated }: TaskCardProps) {
                 </div>
                 {task.updated_at !== task.created_at && (
                   <div className="flex items-start gap-3 text-sm">
-                    <Clock className="w-4 h-4 text-muted-foreground mt-0.5 shrink-0" />
+                    <Clock className="w-4 h-4 mt-0.5 shrink-0 text-muted-foreground" />
                     <div>
                       <p className="text-muted-foreground">Last updated</p>
                       <p className="font-medium text-foreground">
@@ -411,10 +418,10 @@ export function TaskCard({ task, index, onDeleted, onUpdated }: TaskCardProps) {
                   </div>
                 )}
                 <div className="flex items-start gap-3 text-sm">
-                  <Flag className="w-4 h-4 text-muted-foreground mt-0.5 shrink-0" />
+                  <Flag className="w-4 h-4 mt-0.5 shrink-0 text-muted-foreground" />
                   <div>
                     <p className="text-muted-foreground">Priority</p>
-                    <p className="font-medium text-foreground capitalize">{task.priority}</p>
+                    <p className="font-medium capitalize text-foreground">{task.priority}</p>
                   </div>
                 </div>
               </div>
@@ -423,7 +430,6 @@ export function TaskCard({ task, index, onDeleted, onUpdated }: TaskCardProps) {
         </SheetContent>
       </Sheet>
 
-      {/* Delete confirm */}
       <AlertDialog open={deleteOpen} onOpenChange={setDeleteOpen}>
         <AlertDialogContent>
           <AlertDialogHeader>

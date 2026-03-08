@@ -22,7 +22,7 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from '@/components/ui/alert-dialog'
-import { MoreHorizontal, Trash2, Kanban, ArrowRight } from 'lucide-react'
+import { MoreHorizontal, Trash2, Kanban, ArrowRight, Sparkles } from 'lucide-react'
 import { formatDistanceToNow } from 'date-fns'
 import { toast } from 'sonner'
 
@@ -47,21 +47,33 @@ export function ProjectCard({ project }: ProjectCardProps) {
 
   return (
     <>
-      <Card className="group hover:border-primary/30 transition-all hover:shadow-md">
-        <CardHeader className="pb-2">
+      <Card className="group overflow-hidden border-border/70 bg-gradient-to-br from-card via-card to-primary/[0.035] transition-all duration-300 hover:-translate-y-1 hover:border-primary/25 hover:shadow-[0_22px_55px_-35px_rgba(59,130,246,0.55)]">
+        <div className="h-1 w-full bg-gradient-to-r from-primary/90 via-sky-400/70 to-emerald-400/80" />
+        <CardHeader className="pb-3">
           <div className="flex items-start justify-between gap-2">
-            <Link
-              href={`/board/${project.id}`}
-              className="font-semibold text-foreground hover:text-primary transition-colors line-clamp-1 flex-1"
-            >
-              {project.name}
-            </Link>
+            <div className="flex-1 space-y-3">
+              <div className="flex items-center gap-2">
+                <span className="inline-flex h-9 w-9 items-center justify-center rounded-2xl bg-primary/10 text-primary ring-1 ring-primary/15">
+                  <Kanban className="h-4 w-4" />
+                </span>
+                <span className="inline-flex items-center gap-1 rounded-full bg-primary/8 px-2.5 py-1 text-[11px] font-medium text-primary">
+                  <Sparkles className="h-3 w-3" />
+                  Active workspace
+                </span>
+              </div>
+              <Link
+                href={`/board/${project.id}`}
+                className="line-clamp-1 flex-1 text-lg font-semibold tracking-tight text-foreground transition-colors hover:text-primary"
+              >
+                {project.name}
+              </Link>
+            </div>
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Button
                   variant="ghost"
                   size="icon"
-                  className="h-7 w-7 shrink-0 opacity-0 group-hover:opacity-100 transition-opacity"
+                  className="h-8 w-8 shrink-0 opacity-0 transition-opacity group-hover:opacity-100"
                 >
                   <MoreHorizontal className="w-4 h-4" />
                   <span className="sr-only">Project options</span>
@@ -79,18 +91,22 @@ export function ProjectCard({ project }: ProjectCardProps) {
             </DropdownMenu>
           </div>
         </CardHeader>
-        <CardContent className="space-y-4">
+        <CardContent className="space-y-5">
           {project.description && (
-            <p className="text-sm text-muted-foreground line-clamp-2 leading-relaxed">
+            <p className="line-clamp-3 text-sm leading-relaxed text-muted-foreground">
               {project.description}
             </p>
           )}
-          <div className="flex items-center justify-between">
-            <span className="text-xs text-muted-foreground">
+          <div className="flex items-center justify-between rounded-2xl border border-border/60 bg-background/70 px-3 py-2">
+            <span className="text-xs font-medium text-muted-foreground">
               {formatDistanceToNow(new Date(project.created_at), { addSuffix: true })}
             </span>
-            <Link href={`/board/${project.id}`}>
-              <Button size="sm" variant="ghost" className="h-7 gap-1 text-xs text-primary hover:text-primary">
+            <Link href={`/board/${project.id}`} className="shrink-0">
+              <Button
+                size="sm"
+                variant="ghost"
+                className="h-8 gap-1 rounded-full px-3 text-xs text-primary hover:bg-primary/10 hover:text-primary"
+              >
                 <Kanban className="w-3.5 h-3.5" />
                 Open board
                 <ArrowRight className="w-3 h-3" />

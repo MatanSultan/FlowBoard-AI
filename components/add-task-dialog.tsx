@@ -30,6 +30,14 @@ interface AddTaskDialogProps {
   onCreated?: (task: Task) => void
 }
 
+interface TaskFormState {
+  title: string
+  description: string
+  priority: 'low' | 'medium' | 'high'
+  due_date: string
+  tagsInput: string
+}
+
 export function AddTaskDialog({
   projectId,
   defaultStatus = 'todo',
@@ -37,10 +45,10 @@ export function AddTaskDialog({
 }: AddTaskDialogProps) {
   const [open, setOpen] = useState(false)
   const [loading, setLoading] = useState(false)
-  const [form, setForm] = useState({
+  const [form, setForm] = useState<TaskFormState>({
     title: '',
     description: '',
-    priority: 'medium' as const,
+    priority: 'medium',
     due_date: '',
     tagsInput: '',
   })
@@ -83,13 +91,13 @@ export function AddTaskDialog({
         <Button
           variant="ghost"
           size="sm"
-          className="w-full justify-start gap-2 text-muted-foreground hover:text-foreground h-8"
+          className="h-9 w-full justify-start gap-2 rounded-xl text-muted-foreground hover:text-foreground"
         >
-          <Plus className="w-3.5 h-3.5" />
+          <Plus className="h-3.5 w-3.5" />
           Add task
         </Button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-md">
+      <DialogContent className="w-[calc(100vw-1.5rem)] max-w-md p-4 sm:p-6">
         <DialogHeader>
           <DialogTitle>Add task</DialogTitle>
         </DialogHeader>
@@ -116,13 +124,13 @@ export function AddTaskDialog({
               className="resize-none"
             />
           </div>
-          <div className="grid grid-cols-2 gap-3">
+          <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
             <div className="space-y-2">
               <Label>Priority</Label>
               <Select
                 value={form.priority}
                 onValueChange={(v) =>
-                  setForm({ ...form, priority: v as 'low' | 'medium' | 'high' })
+                  setForm({ ...form, priority: v as TaskFormState['priority'] })
                 }
               >
                 <SelectTrigger>
@@ -147,7 +155,7 @@ export function AddTaskDialog({
           <div className="space-y-2">
             <Label htmlFor="add-tags">
               Tags{' '}
-              <span className="text-muted-foreground font-normal">(comma-separated)</span>
+              <span className="font-normal text-muted-foreground">(comma-separated)</span>
             </Label>
             <Input
               id="add-tags"
@@ -156,17 +164,22 @@ export function AddTaskDialog({
               placeholder="design, backend, bug"
             />
           </div>
-          <div className="flex justify-end gap-2 pt-1">
+          <div className="flex flex-col-reverse gap-2 pt-1 sm:flex-row sm:justify-end">
             <Button
               type="button"
               variant="outline"
               onClick={() => setOpen(false)}
               disabled={loading}
+              className="w-full sm:w-auto"
             >
               Cancel
             </Button>
-            <Button type="submit" disabled={loading || !form.title.trim()}>
-              {loading ? <Loader2 className="w-4 h-4 animate-spin mr-2" /> : null}
+            <Button
+              type="submit"
+              disabled={loading || !form.title.trim()}
+              className="w-full sm:w-auto"
+            >
+              {loading ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : null}
               Add task
             </Button>
           </div>

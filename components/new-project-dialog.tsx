@@ -42,12 +42,12 @@ export function NewProjectDialog() {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button className="gap-2">
-          <Plus className="w-4 h-4" />
+        <Button className="w-full gap-2 sm:w-auto">
+          <Plus className="h-4 w-4" />
           New project
         </Button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-md">
+      <DialogContent className="w-[calc(100vw-1.5rem)] max-w-md p-4 sm:p-6">
         <DialogHeader>
           <DialogTitle>Create project</DialogTitle>
           <DialogDescription>
@@ -68,7 +68,7 @@ export function NewProjectDialog() {
           <div className="space-y-2">
             <Label htmlFor="description">
               Description{' '}
-              <span className="text-muted-foreground font-normal">(optional)</span>
+              <span className="font-normal text-muted-foreground">(optional)</span>
             </Label>
             <Textarea
               id="description"
@@ -81,17 +81,18 @@ export function NewProjectDialog() {
           {error && (
             <p className="text-sm text-destructive">{error}</p>
           )}
-          <DialogFooter>
+          <DialogFooter className="flex-col-reverse gap-2 sm:flex-row sm:justify-end">
             <Button
               type="button"
               variant="outline"
               onClick={() => setOpen(false)}
               disabled={loading}
+              className="w-full sm:w-auto"
             >
               Cancel
             </Button>
-            <Button type="submit" disabled={loading}>
-              {loading ? <Loader2 className="w-4 h-4 animate-spin mr-2" /> : null}
+            <Button type="submit" disabled={loading} className="w-full sm:w-auto">
+              {loading ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : null}
               Create project
             </Button>
           </DialogFooter>
